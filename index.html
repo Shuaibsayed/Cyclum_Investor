@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyclum NextGen — Investor Teaser</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   RESET & ROOT
+═══════════════════════════════════════════ */
+:root {
+  --navy:    #0D1B3E;
+  --navy2:   #081022;
+  --green:   #2ECC71;
+  --cyan:    #00D4FF;
+  --white:   #F8FAFC;
+  --grey:    #94A3B8;
+  --card:    rgba(255,255,255,0.04);
+  --border:  rgba(46,204,113,0.22);
+  --nav-h:   76px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden; /* NO PAGE SCROLL */
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy);
+  color: var(--white);
+}
+
+/* ═══════════════════════════════════════════
+   NEON PROGRESS BAR — glowing running bar
+═══════════════════════════════════════════ */
+.neon-bar {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px;
+  background: rgba(0,0,0,.3); z-index: 1001; overflow: hidden;
+}
+.neon-bar-track {
+  position: absolute; top: 0; left: 0; height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--cyan), var(--green));
+  background-size: 200% 100%;
+  animation: neonRun 2.5s linear infinite;
+  box-shadow: 0 0 8px var(--green), 0 0 18px var(--cyan), 0 0 30px var(--green);
+  transition: width .45s ease;
+}
+@keyframes neonRun {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+nav {
+  position: fixed; top: 3px; left: 0; right: 0; z-index: 1000;
+  height: var(--nav-h);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 0 36px;
+  background: rgba(8,16,34,0.96);
+  backdrop-filter: blur(22px);
+  border-bottom: 1px solid var(--border);
+}
+/* Logo — just the image, no extra text */
+.nav-logo { display: flex; align-items: center; }
+.nav-logo img { height: 108px; width: auto; object-fit: contain; display: block; }
+
+/* Nav links */
+.nav-links { display: flex; align-items: center; justify-content: center; gap: 3px; }
+.nav-link {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: none; border: none; cursor: pointer;
+  color: var(--grey); font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 500;
+  padding: 7px 15px; border-radius: 100px;
+  transition: all .2s; white-space: nowrap;
+}
+.nav-link .nn { font-family: 'DM Mono', monospace; font-size: 9px; opacity: .45; }
+.nav-link:hover { color: var(--white); background: rgba(255,255,255,.07); }
+.nav-link.active { color: var(--navy2); background: var(--green); font-weight: 700; }
+.nav-link.active .nn { opacity: .6; }
+
+.pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pdot 2s infinite; }
+@keyframes pdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.65)} }
+
+/* ═══════════════════════════════════════════
+   LEAF CONFETTI CANVAS — behind everything
+═══════════════════════════════════════════ */
+#confetti-canvas {
+  position: fixed; inset: 0; z-index: 1;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════
+   PAGES — fixed full-viewport, no scroll
+═══════════════════════════════════════════ */
+.page {
+  position: fixed;
+  top: calc(var(--nav-h) + 3px);
+  left: 0; right: 0;
+  bottom: 0;
+  z-index: 2;
+  overflow-y: auto; /* inner scroll if content tall */
+  overflow-x: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(14px);
+  transition: opacity .45s ease, transform .45s ease;
+  padding: 28px 52px 52px;
+}
+.page.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+/* ── typography ── */
+h1, h2 { font-family: 'Bebas Neue', sans-serif; line-height: 1; }
+h1 { font-size: clamp(46px, 5.2vw, 82px); }
+h2 { font-size: clamp(34px, 3.8vw, 58px); }
+.plabel { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .22em; color: var(--green); text-transform: uppercase; margin-bottom: 8px; }
+.gline { width: 50px; height: 3px; background: linear-gradient(90deg,var(--green),transparent); border-radius: 2px; margin-bottom: 14px; }
+
+/* ── metric cards ── */
+.mrow { display: grid; gap: 12px; }
+.m4  { grid-template-columns: repeat(4,1fr); }
+.m3  { grid-template-columns: repeat(3,1fr); }
+.m2  { grid-template-columns: repeat(2,1fr); }
+.metric {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px 18px;
+  position: relative; overflow: hidden;
+  transition: transform .28s, border-color .28s, box-shadow .28s;
+  cursor: default;
+}
+.metric:hover {
+  transform: translateY(-4px); border-color: var(--green);
+  box-shadow: 0 0 18px rgba(46,204,113,.18);
+}
+.metric::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at top left,rgba(46,204,113,.09),transparent 60%); }
+.mval { font-family:'Bebas Neue',sans-serif; font-size:38px; color:var(--green); line-height:1; }
+.mlbl { font-size:11px; color:var(--grey); margin-top:4px; line-height:1.35; }
+.msub { font-family:'DM Mono',monospace; font-size:9px; color:rgba(46,204,113,.55); margin-top:3px; }
+
+/* ── generic card ── */
+.card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:22px 22px; transition:border-color .28s,transform .28s; }
+.card:hover { border-color:var(--green); transform:translateY(-3px); }
+.card h3 { font-size:15px; font-weight:700; margin-bottom:7px; }
+.card p { font-size:12px; color:var(--grey); line-height:1.68; }
+.ci { font-size:22px; margin-bottom:10px; }
+
+/* ═══════════════════════════════════════════
+   PAGE 1 — HERO
+═══════════════════════════════════════════ */
+.hero-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 44px; align-items: start;
+  height: 100%;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(46,204,113,.1); border: 1px solid var(--border);
+  border-radius: 100px; padding: 5px 14px;
+  font-size: 11px; font-weight: 500; color: var(--green); margin-bottom: 18px;
+}
+.hero-title { margin-bottom: 14px; }
+.hero-title span { color: var(--green); }
+.hero-desc { font-size: 14px; color: var(--grey); line-height: 1.75; margin-bottom: 26px; max-width: 500px; }
+.hcta {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--green); color: var(--navy2);
+  font-weight: 700; font-size: 12px; letter-spacing: .05em;
+  padding: 11px 22px; border-radius: 100px;
+  cursor: pointer; border: none; transition: background .2s, transform .2s;
+}
+.hcta:hover { background: #3de880; transform: scale(1.03); }
+.hcta-g {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: transparent; color: var(--white);
+  font-size: 12px; padding: 11px 22px; border-radius: 100px;
+  cursor: pointer; border: 1px solid rgba(255,255,255,.2);
+  margin-left: 8px; transition: border-color .2s, color .2s;
+}
+.hcta-g:hover { border-color: var(--green); color: var(--green); }
+
+/* Hero video / image box */
+.hero-media {
+  background: var(--navy2); border-radius: 18px;
+  border: 1px solid var(--border);
+  box-shadow: 0 28px 56px rgba(0,0,0,.55);
+  overflow: hidden; position: relative;
+}
+.hero-media video, .hero-media img {
+  width: 100%; height: auto; display: block; object-fit: contain;
+}
+.media-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(8,16,34,.92), transparent);
+  padding: 16px;
+}
+.tag-row { display: flex; gap: 5px; flex-wrap: wrap; }
+.tag {
+  font-size: 9px; font-family: 'DM Mono', monospace;
+  background: rgba(46,204,113,.13); border: 1px solid var(--border);
+  color: var(--green); padding: 2px 8px; border-radius: 100px;
+}
+
+/* ═══════════════════════════════════════════
+   PAGE 2 — OPPORTUNITY
+═══════════════════════════════════════════ */
+/* Stat strip */
+.stat-strip {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 12px 16px;
+  transition: border-color .25s, transform .25s;
+}
+.stat-strip:hover { border-color: var(--green); transform: translateY(-2px); }
+.ss-val { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: var(--green); line-height: 1; }
+.ss-lbl { font-size: 10px; color: var(--grey); margin-top: 3px; }
+
+/* Advantage rows */
+.adv2 { display: flex; align-items: flex-start; gap: 10px; }
+.adv2-num {
+  font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--green);
+  min-width: 28px; line-height: 1; padding-top: 1px;
+}
+.adv2-title { font-size: 12px; font-weight: 700; color: var(--white); margin-bottom: 2px; }
+.adv2-body  { font-size: 11px; color: var(--grey); line-height: 1.55; }
+
+/* Feature cards (3-up) */
+.feat-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 12px;
+  transition: border-color .25s, transform .25s;
+}
+.feat-card:hover { border-color: var(--green); transform: translateY(-2px); }
+.feat-icon  { font-size: 20px; margin-bottom: 7px; }
+.feat-title { font-size: 11px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.feat-body  { font-size: 10px; color: var(--grey); line-height: 1.55; }
+
+.adv-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+.adv-list li { display: flex; align-items: flex-start; gap: 9px; font-size: 12px; color: var(--grey); line-height: 1.6; }
+.abul { width: 19px; height: 19px; border-radius: 50%; flex-shrink: 0; background: rgba(46,204,113,.12); border: 1px solid var(--green); display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--green); margin-top: 1px; }
+.img-full { width: 100%; border-radius: 14px; border: 1px solid var(--border); background: var(--navy2); display: block; object-fit: contain; margin-top: 24px; }
+
+/* ═══════════════════════════════════════════
+   PAGE 3 — THE ASK
+═══════════════════════════════════════════ */
+.ask-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin-top: 24px; align-items: start; }
+.funnel { display: flex; flex-direction: column; }
+.fi { background: var(--card); border: 1px solid var(--border); padding: 14px 20px; transition: background .25s; }
+.fi:first-child { border-radius: 12px 12px 0 0; }
+.fi:last-child  { border-radius: 0 0 12px 12px; }
+.fi:not(:last-child) { border-bottom: none; }
+.fi:hover { background: rgba(46,204,113,.07); }
+.farrow { text-align: center; color: var(--green); font-size: 14px; padding: 2px 0; background: var(--card); border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+.flbl { font-size: 9px; color: var(--grey); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 2px; }
+.fval { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--white); }
+.fval.g { color: var(--green); }
+.fsub { font-size: 10px; color: var(--grey); margin-top: 1px; }
+.use-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ui { background: var(--card); border: 1px solid var(--border); border-radius: 9px; padding: 10px 12px; display: flex; align-items: center; gap: 8px; }
+.upct { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--green); min-width: 38px; }
+.udesc { font-size: 11px; color: var(--grey); line-height: 1.35; }
+.uamt { font-size: 9px; font-family: 'DM Mono', monospace; color: rgba(46,204,113,.65); margin-top: 1px; }
+
+/* ═══════════════════════════════════════════
+   PAGE 4 — PORTFOLIO
+═══════════════════════════════════════════ */
+.p4-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
+/* Interactive map area */
+.map-box {
+  background: var(--navy2); border-radius: 16px; border: 1px solid var(--border);
+  overflow: hidden; position: relative;
+}
+.map-box img { width: 100%; height: auto; display: block; object-fit: contain; }
+.map-stats-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(8,16,34,.95), transparent);
+  padding: 16px;
+  display: flex; gap: 20px;
+}
+.msbar-item .msv { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--green); }
+.msbar-item .msl { font-size: 10px; color: var(--grey); }
+
+/* Site cards scrollable list */
+.sites-list {
+  display: flex; flex-direction: column; gap: 7px;
+  max-height: 340px; overflow-y: auto;
+  padding-right: 4px;
+}
+.sites-list::-webkit-scrollbar { width: 3px; }
+.sites-list::-webkit-scrollbar-track { background: transparent; }
+.sites-list::-webkit-scrollbar-thumb { background: var(--green); border-radius: 3px; }
+
+.sc {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 13px;
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; transition: all .2s; position: relative; overflow: hidden;
+}
+.sc:hover { border-color: var(--green); background: rgba(46,204,113,.06); transform: translateX(3px); }
+.sc-left { display: flex; align-items: center; gap: 10px; }
+.sc-id { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--grey); }
+.sc-loc { font-size: 12px; font-weight: 600; }
+.sc-right { display: flex; gap: 14px; text-align: right; }
+.sc-stat .sv { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 700; color: var(--green); }
+.sc-stat .sl { font-size: 8px; color: var(--grey); }
+.sc-badge { font-size: 7px; font-family: 'DM Mono', monospace; background: rgba(46,204,113,.13); color: var(--green); padding: 2px 5px; border-radius: 100px; border: 1px solid var(--border); }
+.star-badge { background: rgba(46,204,113,.25); }
+
+/* Chart bar */
+.irr-bar { height: 3px; background: var(--border); border-radius: 2px; margin-top: 5px; overflow: hidden; }
+.irr-fill { height: 100%; background: var(--green); border-radius: 2px; width: 0%; transition: width 1.2s ease; }
+
+/* ═══════════════════════════════════════════
+   PAGE 5 — TEAM
+═══════════════════════════════════════════ */
+.team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 26px; }
+.tc { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: transform .3s, border-color .3s; }
+.tc:hover { transform: translateY(-4px); border-color: var(--green); }
+.tc-img { background: var(--navy2); display: flex; align-items: center; justify-content: center; padding: 14px 14px 0; position: relative; }
+.tc-img img { width: 100%; max-height: 200px; height: auto; display: block; object-fit: contain; border-radius: 8px; transition: transform .4s; }
+.tc:hover .tc-img img { transform: scale(1.03); }
+.tc-grad { position: absolute; bottom: 0; left: 0; right: 0; height: 40px; background: linear-gradient(to top, var(--navy2), transparent); pointer-events: none; }
+.tc-body { padding: 14px 16px 16px; }
+.tc-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.tc-role { font-size: 10px; color: var(--green); font-family: 'DM Mono', monospace; margin-bottom: 6px; }
+.tc-desc { font-size: 11px; color: var(--grey); line-height: 1.62; }
+
+.cbtns { display: flex; gap: 8px; flex-wrap: wrap; }
+.cb { display: inline-flex; align-items: center; gap: 5px; padding: 9px 16px; border-radius: 100px; font-size: 11px; font-weight: 600; cursor: pointer; border: none; transition: all .2s; }
+.cb.p { background: var(--green); color: var(--navy2); }
+.cb.p:hover { background: #3de880; }
+.cb.g { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,.2); }
+.cb.g:hover { border-color: var(--green); color: var(--green); }
+
+/* disclaimer */
+.disc { background: rgba(0,0,0,.2); border: 1px solid rgba(255,255,255,.06); border-radius: 8px; padding: 10px 14px; margin-top: 20px; font-size: 9px; color: rgba(148,163,184,.45); line-height: 1.6; }
+
+/* ═══════════════════════════════════════════
+   PAGE 5 — TEAM CONTACT STYLES
+═══════════════════════════════════════════ */
+.contact-person {
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.cp-avatar {
+  width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(46,204,113,.25), rgba(0,212,255,.15));
+  border: 1px solid var(--green);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif; font-size: 14px;
+  color: var(--green); letter-spacing: .05em;
+}
+.cp-body { display: flex; flex-direction: column; gap: 3px; }
+.cp-name {
+  font-size: 13px; font-weight: 700; color: var(--white);
+}
+.cp-title {
+  font-size: 11px; font-weight: 400; color: var(--grey);
+}
+.cp-line {
+  font-size: 12px; color: var(--grey); text-decoration: none;
+  transition: color .18s; display: block;
+}
+.cp-line:hover { color: var(--green); }
+.cp-divider {
+  height: 1px; background: var(--border);
+  margin: 14px 0;
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width:900px) {
+  :root { --nav-h: 64px; }
+  nav { padding: 0 16px; }
+  .nav-logo img { height: 56px; }
+  .nav-link { font-size: 11px; padding: 5px 8px; }
+  .nav-link .nn { display: none; }
+  .page { padding: 18px 18px 40px; }
+  .hero-grid,.p2-grid,.ask-grid,.team-grid,.p4-grid { grid-template-columns: 1fr; }
+  .mrow.m4 { grid-template-columns: 1fr 1fr; }
+  h1 { font-size: 40px; } h2 { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ NEON RUNNING BAR ══════════ -->
+<div class="neon-bar">
+  <div class="neon-bar-track" id="neonTrack" style="width:20%"></div>
+</div>
+
+<!-- ══════════ LEAF CONFETTI ══════════ -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- ══════════════════════ NAV ══════════════════════ -->
+<nav id="mainNav">
+  <div class="nav-logo">
+    <img src="https://raw.githubusercontent.com/Shuaibsayed/Cyclum_Investor/main/Placeholder_Cyclum.png"
+         alt="Cyclum NextGen"
+         onerror="this.style.display='none'">
+  </div>
+
+  <div class="nav-links">
+    <button class="nav-link active" onclick="goTo(1)" id="nl1"><span class="nn">01</span> Overview</button>
+    <button class="nav-link"        onclick="goTo(2)" id="nl2"><span class="nn">02</span> Opportunity</button>
+    <button class="nav-link"        onclick="goTo(3)" id="nl3"><span class="nn">03</span> The Ask</button>
+    <button class="nav-link"        onclick="goTo(4)" id="nl4"><span class="nn">04</span> Portfolio</button>
+    <button class="nav-link"        onclick="goTo(5)" id="nl5"><span class="nn">05</span> Team</button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════
+     PAGE 1 — OVERVIEW
+══════════════════════════════════════════════════════ -->
+<div class="page active" id="page1">
+  <div class="hero-grid">
+    <!-- LEFT -->
+    <div>
+      <div class="hero-eyebrow">
+        <img src="https://raw.githubusercontent.com/Shuaibsayed/Cyclum_Investor/main/Leaf.png"
+             style="height:12px;object-fit:contain" onerror="this.style.display='none'">
+        Next Generation Travel Centers
+      </div>
+      <h1 class="hero-title">AMERICA'S<br><span>RENEWABLE</span><br>HIGHWAY</h1>
+      <p class="hero-desc">Cyclum NextGen is building the infrastructure backbone for the clean trucking economy — 18 sites across 10 states offering EV, hydrogen, CNG, and renewable diesel under one roof.</p>
+      <div>
+        <button class="hcta" onclick="goTo(2)">View Opportunity →</button>
+        <button class="hcta-g" onclick="goTo(5)">Meet the Team</button>
+      </div>
+
+      <!-- Interactive Pie Chart -->
+      <div style="margin-top:16px">
+        <div style="font-size:10px;color:var(--grey);font-family:'DM Mono',monospace;margin-bottom:8px;letter-spacing:.1em">REVENUE MIX — HOVER TO EXPLORE</div>
+        <div style="display:flex;align-items:center;gap:20px">
+          <canvas id="pieChart" width="160" height="160" style="flex-shrink:0;cursor:pointer"></canvas>
+          <div id="pieLegend" style="display:flex;flex-direction:column;gap:6px;flex:1"></div>
+        </div>
+        <div id="pieTooltip" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--green);margin-top:6px;min-height:16px;letter-spacing:.05em"></div>
+      </div>
+
+
+    </div>
+
+    <!-- RIGHT — VIDEO hero -->
+    <div>
+      <div class="hero-media">
+        <video
+          id="heroVideo"
+          autoplay muted loop playsinline
+          poster="https://raw.githubusercontent.com/Shuaibsayed/Cyclum_Investor/main/Presntation%20Cover%20Page_Latest%2004-23-2025.png"
+          onerror="this.style.display='none'"
+        >
+          <source src="https://raw.githubusercontent.com/Shuaibsayed/Cyclum_Investor/main/Dunnigan_Site%20Renders_website_hero%20page.mp4" type="video/mp4">
+          <!-- Fallback image if video fails -->
+          <img src="https://raw.githubusercontent.com/Shuaibsayed/Cyclum_Investor/main/Presntation%20Cover%20Page_Latest%2004-23-2025.png" alt="Cyclum Travel Center">
+        </video>
+        <div class="media-overlay">
+          <div class="tag-row">
+            <span class="tag">Renewable Diesel</span><span class="tag">EV Charging</span><span class="tag">Hydrogen</span><span class="tag">CNG</span><span class="tag">RNG Microgrid</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mrow m2" style="margin-top:12px">
+        <div class="metric"><div class="mval counter" data-target="34.3" data-suffix="%">0%</div><div class="mlbl">Project IRR</div><div class="msub">vs ~15% PE median</div></div>
+        <div class="metric"><div class="mval counter" data-target="4.64" data-suffix="×">0×</div><div class="mlbl">MOIC</div><div class="msub">vs ~1.8× PE median</div></div>
+        <div class="metric"><div class="mval counter" data-target="88" data-suffix="%">0%</div><div class="mlbl">Discount to NAV</div><div class="msub">$6/sh vs $51.17 NAV</div></div>
+        <div class="metric"><div class="mval">$14M</div><div class="mlbl">Equity Raise</div><div class="msub">Unlocks $459M in projects</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="disc">This teaser is for informational purposes only and does not constitute an offer or solicitation of securities. All projections are forward-looking and subject to material risks. Prospective investors should conduct their own due diligence.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     PAGE 2 — OPPORTUNITY
+══════════════════════════════════════════════════════ -->
+<div class="page" id="page2" style="overflow:hidden;padding:22px 52px 16px;display:flex;flex-direction:column;gap:14px;">
+
+  <!-- TOP: label + title + subtitle in one clean row -->
+  <div>
+    <div class="plabel">02 / Market Opportunity</div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
+      <h2 style="font-size:clamp(28px,3.2vw,48px);line-height:1">A <span style="color:var(--green)">Generational</span> Window</h2>
+      <p style="font-size:12px;color:var(--grey);line-height:1.6;max-width:500px;padding-bottom:4px">
+        The $45B US travel center market has not been modernized. Cyclum is the first-mover in the renewable fuel transition — with infrastructure, contracts, and partnerships already in place.
+      </p>
+    </div>
+  </div>
+
+  <!-- STAT STRIP -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+    <div class="stat-strip"><div class="ss-val"><span class="counter" data-target="45" data-prefix="$" data-suffix="B">$0B</span></div><div class="ss-lbl">US Travel Center Market</div></div>
+    <div class="stat-strip"><div class="ss-val"><span class="counter" data-target="40" data-suffix="%">0%</span></div><div class="ss-lbl">CAGR — EV Charging 2030</div></div>
+    <div class="stat-strip"><div class="ss-val"><span class="counter" data-target="850" data-prefix="$" data-suffix="B">$0B</span></div><div class="ss-lbl">Renewable Infrastructure Opp.</div></div>
+    <div class="stat-strip"><div class="ss-val"><span class="counter" data-target="1.2" data-prefix="$" data-suffix="T">$0T</span></div><div class="ss-lbl">Federal Infrastructure Bill</div></div>
+  </div>
+
+  <!-- MAIN BODY: 2 equal columns -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;flex:1;min-height:0">
+
+    <!-- LEFT COL: advantages only, fills height -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <!-- Advantages block — fills all available height -->
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px 20px;flex:1">
+        <div style="font-size:11px;font-weight:700;color:var(--green);font-family:'DM Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px">4 Unfair Advantages</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="adv2"><div class="adv2-num">01</div><div><div class="adv2-title">Truck Fleet Fuel Offtake</div><div class="adv2-body">HMD Logistics — 40,000 fleets, 70+ sales reps. Insured fleet contracts ≈ 50% of revenue with 5–10 year locked volume.</div></div></div>
+          <div class="adv2"><div class="adv2-num">02</div><div><div class="adv2-title">Phillips 66 / 76 Partnership</div><div class="adv2-body">Official fueling partner providing marketing support, site development funding, and 56M gallons/year renewable diesel supply.</div></div></div>
+          <div class="adv2"><div class="adv2-num">03</div><div><div class="adv2-title">Allianz Insured Contracts</div><div class="adv2-body">Up to 90% coverage on credit risk and gallon volume shortfalls. Gallagher insurance wrap on all bundled contracts.</div></div></div>
+          <div class="adv2"><div class="adv2-num">04</div><div><div class="adv2-title">Proprietary Emissions Platform</div><div class="adv2-body">Scope 3 analytics, mobile app, ESG compliance tracking — builds institutional investor and fleet operator confidence.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COL: 3 feature cards + differentiator image -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+
+      <!-- 3 feature cards in a row at top -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+        <div class="feat-card">
+          <div class="feat-icon">⚡</div>
+          <div class="feat-title">Diversified Revenue</div>
+          <div class="feat-body">Multi-fuel income across diesel, gasoline, EV, H₂ and C-store. No single dependency.</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">🛡️</div>
+          <div class="feat-title">Asset-Backed</div>
+          <div class="feat-body">70/30 debt-to-equity. All financing secured by real infrastructure assets.</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">🔋</div>
+          <div class="feat-title">Microgrid Tech</div>
+          <div class="feat-body">Capstone microturbines + solar/wind. 30–50% ITC/PTC eligible. No grid needed.</div>
+        </div>
+      </div>
+
+      <!-- Differentiator image — full width, natural aspect ratio, no crop -->
+      <div style="flex:1;border-radius:14px;overflow:hidden;border:1px solid var(--border);background:var(--navy2);display:flex;align-items:center;justify-content:center;min-height:0">
+        <img src="https://raw.githubusercontent.com/Shuaibsayed/Cyclum_Investor/main/4%20Differentiator%20for%20Cyclum.png"
+             alt="4 Differentiators"
+             style="width:100%;height:100%;object-fit:contain;display:block"
+             onerror="this.parentElement.style.display='none'">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     PAGE 3 — THE ASK
+══════════════════════════════════════════════════════ -->
+<div class="page" id="page3">
+  <div class="plabel">03 / The Ask</div>
+  <div class="gline"></div>
+  <h2>$14M <span style="color:var(--green)">Unlocks</span> $459M</h2>
+  <p style="font-size:13px;color:var(--grey);margin-top:10px;max-width:560px;line-height:1.75">One obstacle — the Holdco balance sheet — blocks $459M in fully structured project financing. Your $14M equity clears it.</p>
+
+  <div class="ask-grid">
+    <!-- Funnel -->
+    <div>
+      <div class="funnel">
+        <div class="fi"><div class="flbl">Your Equity In</div><div class="fval g counter" data-prefix="$" data-suffix="M" data-target="14">$0M</div><div class="fsub">Holdco balance sheet strengthened</div></div>
+        <div class="farrow">↓</div>
+        <div class="fi"><div class="flbl">Leverage Multiplier</div><div class="fval">1 : 33×</div><div class="fsub">Senior $269M + Sub $30M + Revolver $15M</div></div>
+        <div class="farrow">↓</div>
+        <div class="fi"><div class="flbl">Total Projects Activated</div><div class="fval g counter" data-prefix="$" data-suffix="M" data-target="459">$0M</div><div class="fsub">18 sites across 10 states</div></div>
+        <div class="farrow">↓</div>
+        <div class="fi"><div class="flbl">Enterprise Value at Exit</div><div class="fval g">$562.88M</div><div class="fsub">34.3% IRR · 4.64× MOIC · 8.08yr debt repayment</div></div>
+      </div>
+      <div style="margin-top:16px;background:rgba(46,204,113,.08);border:1px solid var(--green);border-radius:12px;padding:16px 20px">
+        <div style="font-size:10px;color:var(--green);font-family:'DM Mono',monospace;margin-bottom:5px">ENTRY PRICING ADVANTAGE</div>
+        <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+          <div><div style="font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--green);line-height:1">$6<span style="font-size:18px">/share</span></div><div style="font-size:10px;color:var(--grey)">Your entry price</div></div>
+          <div style="font-size:20px;color:var(--grey)">vs</div>
+          <div><div style="font-family:'Bebas Neue',sans-serif;font-size:40px;color:rgba(255,255,255,.2);line-height:1;text-decoration:line-through">$51.17</div><div style="font-size:10px;color:var(--grey)">NAV per share</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <div>
+      <h3 style="font-size:14px;font-weight:700;margin-bottom:10px">Use of $14M Proceeds</h3>
+      <div class="use-grid">
+        <div class="ui"><div class="upct counter" data-target="40" data-suffix="%">0%</div><div><div class="udesc">Holdco Debt Paydown</div><div class="uamt">$5.6M</div></div></div>
+        <div class="ui"><div class="upct counter" data-target="25" data-suffix="%">0%</div><div><div class="udesc">Working Capital Reserve</div><div class="uamt">$3.5M</div></div></div>
+        <div class="ui"><div class="upct counter" data-target="20" data-suffix="%">0%</div><div><div class="udesc">Site Pre-Development</div><div class="uamt">$2.8M</div></div></div>
+        <div class="ui"><div class="upct counter" data-target="10" data-suffix="%">0%</div><div><div class="udesc">Professional Fees</div><div class="uamt">$1.4M</div></div></div>
+        <div class="ui" style="grid-column:span 2"><div class="upct">5%</div><div><div class="udesc">Contingency Reserve</div><div class="uamt">$0.7M</div></div></div>
+      </div>
+
+      <h3 style="font-size:14px;font-weight:700;margin:16px 0 9px">5 Exit Pathways</h3>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div class="ui"><div style="color:var(--green);font-size:13px;min-width:16px">✓</div><div class="udesc">LP/GP Fund Buyout</div></div>
+        <div class="ui"><div style="color:var(--green);font-size:13px;min-width:16px">✓</div><div class="udesc">Individual site sales at 12–15× EBITDA</div></div>
+        <div class="ui"><div style="color:var(--green);font-size:13px;min-width:16px">✓</div><div class="udesc">Strategic acquirer (Pilot, Love's, TA)</div></div>
+        <div class="ui"><div style="color:var(--green);font-size:13px;min-width:16px">✓</div><div class="udesc">REIT conversion</div></div>
+        <div class="ui"><div style="color:var(--green);font-size:13px;min-width:16px">✓</div><div class="udesc">Portfolio refinance</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     PAGE 4 — PORTFOLIO
+══════════════════════════════════════════════════════ -->
+<div class="page" id="page4">
+  <div class="plabel">04 / 18-Site Portfolio</div>
+  <div class="gline"></div>
+  <h2>18 Sites, <span style="color:var(--green)">10 States</span> — Every Deal Underwritten</h2>
+
+  <div class="mrow m3" style="margin-top:16px">
+    <div class="metric"><div class="mval counter" data-prefix="$" data-suffix="M" data-target="94.3">$0M</div><div class="mlbl">Annual CFADS (18 sites)</div><div class="msub">Cash flow for debt service</div></div>
+    <div class="metric"><div class="mval">8.08yr</div><div class="mlbl">Loan Self-Liquidation</div><div class="msub">Repaid from operating cash flow</div></div>
+    <div class="metric"><div class="mval">15–22%</div><div class="mlbl">Quarterly Cash Yield</div><div class="msub">To LP investors during hold period</div></div>
+  </div>
+
+  <div class="p4-grid">
+    <!-- Map -->
+    <div>
+      <div class="map-box" id="mapBox">
+        <img src="https://raw.githubusercontent.com/Shuaibsayed/Cyclum_Investor/main/Cyclum_Site_Location%20Map.png"
+             alt="Site Map" onerror="this.style.display='none'">
+        <div class="map-stats-bar">
+          <div class="msbar-item"><div class="msv">18</div><div class="msl">Sites</div></div>
+          <div class="msbar-item"><div class="msv">21.9%</div><div class="msl">Avg IRR</div></div>
+          <div class="msbar-item"><div class="msv">4.15×</div><div class="msl">Avg MOIC</div></div>
+          <div class="msbar-item"><div class="msv">10</div><div class="msl">States</div></div>
+        </div>
+      </div>
+      <!-- IRR range bar chart -->
+      <div style="margin-top:12px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px">
+        <div style="font-size:10px;color:var(--grey);font-family:'DM Mono',monospace;margin-bottom:10px;letter-spacing:.08em">IRR RANGE ACROSS PORTFOLIO</div>
+        <div id="irrChart" style="display:flex;flex-direction:column;gap:5px"></div>
+      </div>
+    </div>
+
+    <!-- Sites list -->
+    <div>
+      <div style="font-size:10px;color:var(--grey);font-family:'DM Mono',monospace;margin-bottom:8px;letter-spacing:.08em">CLICK A SITE TO HIGHLIGHT</div>
+      <div class="sites-list" id="sitesList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     PAGE 5 — TEAM
+══════════════════════════════════════════════════════ -->
+<div class="page" id="page5" style="overflow:hidden;display:flex;flex-direction:column;padding:22px 52px 16px;gap:16px">
+
+  <!-- Header -->
+  <div>
+    <div class="plabel">05 / Management Team &amp; Contact</div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
+      <h2 style="font-size:clamp(28px,3.2vw,48px);line-height:1">The <span style="color:var(--green)">Management</span> Team</h2>
+      <p style="font-size:12px;color:var(--grey);line-height:1.6;max-width:480px;padding-bottom:4px">Decades of hands-on experience across travel center development, renewable energy systems, and institutional capital — the people who have built and financed this industry.</p>
+    </div>
+  </div>
+
+  <!-- Team cards + contact — side by side -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;flex:1;min-height:0">
+
+    <!-- LEFT: 3 team cards -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-content:start">
+
+      <!-- Brian -->
+      <div class="tc">
+        <div class="tc-img">
+          <img src="https://raw.githubusercontent.com/Shuaibsayed/Cyclum_Investor/main/Brian%20Profitt%20-%20CEO.jpg" alt="Brian Profitt" onerror="this.style.display='none'">
+          <div class="tc-grad"></div>
+        </div>
+        <div class="tc-body">
+          <div class="tc-name">Brian Profitt</div>
+          <div class="tc-role">Chief Executive Officer</div>
+          <div class="tc-desc">Former WilcoHess executive who led 100+ travel centers to become the 4th largest truck stop network in the US. 25+ years in fuel distribution and travel center operations.</div>
+        </div>
+      </div>
+
+      <!-- Eric -->
+      <div class="tc">
+        <div class="tc-img">
+          <img src="https://raw.githubusercontent.com/Shuaibsayed/Cyclum_Investor/main/Eric_Headshot%20color.jpg" alt="Eric Dana" onerror="this.style.display='none'">
+          <div class="tc-grad"></div>
+        </div>
+        <div class="tc-body">
+          <div class="tc-name">Eric Dana</div>
+          <div class="tc-role">Chief Financial Officer</div>
+          <div class="tc-desc">30+ years across energy, technology, and financial services. Led a $161M Series C at Atom Power. Deep expertise in M&amp;A, investor relations, and PE-backed company scaling.</div>
+        </div>
+      </div>
+
+      <!-- Shaun -->
+      <div class="tc">
+        <div class="tc-img">
+          <img src="https://raw.githubusercontent.com/Shuaibsayed/Cyclum_Investor/main/Shaun%20Lee%20-%20Co%20founder.jpg" alt="Shaun Lee" onerror="this.style.display='none'">
+          <div class="tc-grad"></div>
+        </div>
+        <div class="tc-body">
+          <div class="tc-name">Shaun Lee</div>
+          <div class="tc-role">Co-Founder · Marketing &amp; Renewable Fuels Manager</div>
+          <div class="tc-desc">30+ years in mechanical systems and renewable energy across the US and Europe. Pioneer in on-site microturbine deployment and exclusive Capstone distributor in Eastern Europe.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: contact details + CTA -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+
+      <!-- Contact block -->
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 24px;flex:1">
+        <div style="font-size:11px;font-weight:700;color:var(--green);font-family:'DM Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px">Get In Touch</div>
+
+        <!-- Eric -->
+        <div class="contact-person">
+          <div class="cp-avatar">ED</div>
+          <div class="cp-body">
+            <div class="cp-name">Eric Dana <span class="cp-title">— CFO</span></div>
+            <a href="tel:9803222060" class="cp-line">📞 980.322.2060</a>
+            <a href="mailto:Eric.dana@Cyclum.Com" class="cp-line">✉ Eric.dana@Cyclum.Com</a>
+          </div>
+        </div>
+
+        <div class="cp-divider"></div>
+
+        <!-- Brian -->
+        <div class="contact-person">
+          <div class="cp-avatar">BP</div>
+          <div class="cp-body">
+            <div class="cp-name">Brian Profitt <span class="cp-title">— CEO</span></div>
+            <a href="tel:9802469157" class="cp-line">📞 980.246.9157 (Ext 2010)</a>
+            <a href="mailto:Brian.Profitt@Cyclum.Com" class="cp-line">✉ Brian.Profitt@Cyclum.Com</a>
+          </div>
+        </div>
+
+        <div class="cp-divider"></div>
+
+        <!-- Shaun -->
+        <div class="contact-person">
+          <div class="cp-avatar">SL</div>
+          <div class="cp-body">
+            <div class="cp-name">Shaun Lee <span class="cp-title">— Co-Founder, Marketing &amp; Renewable Fuels</span></div>
+            <a href="tel:9804047634" class="cp-line">📞 980.404.7634 (Ext 2002)</a>
+            <a href="mailto:Shaun.lee@Cyclum.Com" class="cp-line">✉ Shaun.lee@Cyclum.Com</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA buttons -->
+      <div style="display:flex;gap:10px">
+        <button class="cb p" style="flex:1;justify-content:center"
+                onclick="window.location.href='mailto:Eric.dana@Cyclum.Com?subject=Cyclum%20Investor%20Inquiry'">
+          Request Data Room →
+        </button>
+        <button class="cb g" onclick="goTo(1)">↑ Top</button>
+      </div>
+
+      <div class="disc" style="margin-top:0">This document has been prepared by Cyclum Renewables, LLC for informational purposes only. All financial projections involve numerous assumptions, risks and uncertainties. This is not an offer to sell or solicitation to buy any securities. Prospective investors must rely on their own investigation and due diligence.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════════ -->
+<script>
+/* ─── NAV / PAGE SWITCHING ─── */
+let current = 1;
+const total = 5;
+function goTo(n) {
+  document.getElementById('page' + current).classList.remove('active');
+  document.getElementById('nl'   + current).classList.remove('active');
+  current = n;
+  document.getElementById('page' + current).classList.add('active');
+  document.getElementById('nl'   + current).classList.add('active');
+  document.getElementById('neonTrack').style.width = (n / total * 100) + '%';
+  // trigger counters for new page
+  setTimeout(() => animateCounters(document.getElementById('page' + n)), 100);
+  // trigger IRR chart if portfolio page
+  if (n === 4) setTimeout(buildIRRChart, 300);
+  // init pie chart on overview
+  if (n === 1) setTimeout(initPieChart, 150);
+}
+document.addEventListener('keydown', e => {
+  if (e.key==='ArrowRight'||e.key==='ArrowDown') goTo(Math.min(current+1,total));
+  if (e.key==='ArrowLeft' ||e.key==='ArrowUp')   goTo(Math.max(current-1,1));
+});
+
+/* ─── ANIMATED COUNTERS ─── */
+function animateCounters(scope) {
+  (scope || document).querySelectorAll('.counter, span.counter').forEach(el => {
+    const target = parseFloat(el.dataset.target);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const duration = 1400;
+    const start = performance.now();
+    function step(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      const val = target * ease;
+      el.textContent = prefix + (Number.isInteger(target) ? Math.round(val) : val.toFixed(target < 10 ? 2 : 1)) + suffix;
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+/* ─── PIE CHART ─── */
+const PIE_DATA = [
+  { label: 'Renewable Diesel', pct: 59, color: '#2ECC71' },
+  { label: 'Gasoline',         pct: 17, color: '#00D4FF' },
+  { label: 'EV Charging',      pct: 12, color: '#FFB432' },
+  { label: 'Hydrogen (H₂)',    pct:  7, color: '#B464FF' },
+  { label: 'C-Store & Others', pct:  5, color: '#FF6482' },
+];
+// Total = 59+17+12+7+5 = 100 ✓
+
+function drawPie(highlightIdx = -1) {
+  const canvas = document.getElementById('pieChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const cx = 80, cy = 80, r = 72, ri = 36;
+  ctx.clearRect(0, 0, 160, 160);
+
+  let startAngle = -Math.PI / 2;
+  PIE_DATA.forEach((seg, i) => {
+    const slice = (seg.pct / 100) * Math.PI * 2;
+    const isHi  = i === highlightIdx;
+    const push  = isHi ? 7 : 0;
+    const midA  = startAngle + slice / 2;
+    const ox    = Math.cos(midA) * push;
+    const oy    = Math.sin(midA) * push;
+
+    // shadow glow on hover
+    if (isHi) {
+      ctx.shadowColor = seg.color;
+      ctx.shadowBlur  = 18;
+    } else {
+      ctx.shadowBlur = 0;
+    }
+
+    ctx.beginPath();
+    ctx.moveTo(cx + ox, cy + oy);
+    ctx.arc(cx + ox, cy + oy, r, startAngle, startAngle + slice);
+    ctx.arc(cx + ox, cy + oy, ri, startAngle + slice, startAngle, true);
+    ctx.closePath();
+    ctx.fillStyle = isHi ? seg.color : seg.color + 'cc';
+    ctx.fill();
+
+    // border
+    ctx.strokeStyle = '#0D1B3E';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // percent label inside slice (only if pct >= 10)
+    if (seg.pct >= 10) {
+      const lx = cx + ox + Math.cos(midA) * (ri + (r - ri) * 0.55);
+      const ly = cy + oy + Math.sin(midA) * (ri + (r - ri) * 0.55);
+      ctx.shadowBlur = 0;
+      ctx.fillStyle  = '#fff';
+      ctx.font       = 'bold 11px DM Sans, sans-serif';
+      ctx.textAlign  = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(seg.pct + '%', lx, ly);
+    }
+
+    startAngle += slice;
+  });
+
+  ctx.shadowBlur = 0;
+  // centre label
+  ctx.fillStyle = '#F8FAFC';
+  ctx.font = 'bold 13px Bebas Neue, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('100%', cx, cy - 6);
+  ctx.font = '9px DM Mono, monospace';
+  ctx.fillStyle = '#94A3B8';
+  ctx.fillText('REVENUE', cx, cy + 7);
+}
+
+function buildLegend(highlightIdx = -1) {
+  const leg = document.getElementById('pieLegend');
+  if (!leg) return;
+  leg.innerHTML = PIE_DATA.map((s, i) => `
+    <div class="pie-leg-item" data-i="${i}" style="display:flex;align-items:center;gap:7px;cursor:pointer;padding:3px 6px;border-radius:6px;transition:background .18s;background:${i===highlightIdx?'rgba(255,255,255,.07)':'transparent'}">
+      <span style="width:10px;height:10px;border-radius:3px;background:${s.color};flex-shrink:0;display:inline-block"></span>
+      <span style="font-size:10px;color:${i===highlightIdx?'#fff':'#94A3B8'};font-family:'DM Sans',sans-serif;">${s.label}</span>
+      <span style="font-size:10px;color:${s.color};font-family:'DM Mono',monospace;margin-left:auto;font-weight:700">${s.pct}%</span>
+    </div>`).join('');
+
+  leg.querySelectorAll('.pie-leg-item').forEach(el => {
+    const idx = +el.dataset.i;
+    el.addEventListener('mouseenter', () => { drawPie(idx); buildLegend(idx); updateTooltip(idx); });
+    el.addEventListener('mouseleave', () => { drawPie(); buildLegend(); updateTooltip(-1); });
+    el.addEventListener('click',      () => { drawPie(idx); buildLegend(idx); updateTooltip(idx); });
+  });
+}
+
+function updateTooltip(idx) {
+  const tt = document.getElementById('pieTooltip');
+  if (!tt) return;
+  tt.textContent = idx >= 0 ? `▶ ${PIE_DATA[idx].label}: ${PIE_DATA[idx].pct}% of total revenue` : '';
+}
+
+function initPieChart() {
+  const canvas = document.getElementById('pieChart');
+  if (!canvas) return;
+  drawPie();
+  buildLegend();
+
+  // hover on canvas slices
+  canvas.addEventListener('mousemove', e => {
+    const rect   = canvas.getBoundingClientRect();
+    const mx     = (e.clientX - rect.left) * (160 / rect.width)  - 80;
+    const my     = (e.clientY - rect.top)  * (160 / rect.height) - 80;
+    const dist   = Math.sqrt(mx*mx + my*my);
+    if (dist < 36 || dist > 72) { drawPie(); buildLegend(); updateTooltip(-1); return; }
+    let angle = Math.atan2(my, mx) + Math.PI / 2;
+    if (angle < 0) angle += Math.PI * 2;
+    let acc = 0;
+    for (let i = 0; i < PIE_DATA.length; i++) {
+      acc += (PIE_DATA[i].pct / 100) * Math.PI * 2;
+      if (angle <= acc) { drawPie(i); buildLegend(i); updateTooltip(i); return; }
+    }
+  });
+  canvas.addEventListener('mouseleave', () => { drawPie(); buildLegend(); updateTooltip(-1); });
+}
+
+/* ─── PORTFOLIO DATA ─── */
+const sites = [
+  {id:'01_SA', loc:'Morton\'s, NV',   irr:23.14, moic:4.37, star:false},
+  {id:'02_SA', loc:'Abbort\'s, TX',   irr:17.94, moic:3.33, star:false},
+  {id:'04_SA', loc:'Lexington, IL',   irr:32.09, moic:6.59, star:true },
+  {id:'11_SA', loc:'Natalia, TX',     irr:19.53, moic:3.64, star:false},
+  {id:'13_SA', loc:'Lindwood, NC',    irr:12.77, moic:2.27, star:false},
+  {id:'14_SA', loc:'Waldo, FL',       irr:25.19, moic:4.85, star:false},
+  {id:'15_LP', loc:'Chowchilla, CA',  irr:18.43, moic:3.38, star:false},
+  {id:'16_SA', loc:'Dunnigan, CA',    irr:23.05, moic:4.35, star:false},
+  {id:'17_LL', loc:'Tulare, CA',      irr:18.82, moic:3.45, star:false},
+  {id:'18_LP', loc:'Moreno Beach, CA',irr:17.18, moic:3.12, star:false},
+  {id:'19_LP', loc:'Barstow, CA',     irr:15.61, moic:2.84, star:false},
+  {id:'20_SA', loc:'Adel, GA',        irr:25.03, moic:4.86, star:false},
+  {id:'21_SA', loc:'Baytown, TX',     irr:24.46, moic:4.68, star:false},
+  {id:'22_SA', loc:'Forest City, AK', irr:16.16, moic:2.94, star:false},
+  {id:'23_SA', loc:'George, WA',      irr:18.78, moic:3.43, star:false},
+  {id:'24_SA', loc:'Medly, FL',       irr:39.01, moic:8.10, star:true },
+  {id:'25_SA', loc:'Cobra, TX',       irr:22.45, moic:4.27, star:false},
+  {id:'26_SA', loc:'Thorb, WA',       irr:23.72, moic:4.55, star:false},
+];
+
+function buildSitesList() {
+  const list = document.getElementById('sitesList');
+  list.innerHTML = '';
+  sites.forEach((s, i) => {
+    const div = document.createElement('div');
+    div.className = 'sc';
+    div.id = 'sc_' + i;
+    div.innerHTML = `
+      <div class="sc-left">
+        <span class="sc-badge ${s.star?'star-badge':''}">${s.id}${s.star?' ★':''}</span>
+        <span class="sc-loc">${s.loc}</span>
+      </div>
+      <div class="sc-right">
+        <div class="sc-stat"><div class="sv">${s.irr}%</div><div class="sl">IRR</div></div>
+        <div class="sc-stat"><div class="sv">${s.moic}×</div><div class="sl">MOIC</div></div>
+      </div>`;
+    div.addEventListener('click', () => highlightSite(i));
+    list.appendChild(div);
+  });
+}
+
+function highlightSite(idx) {
+  document.querySelectorAll('.sc').forEach((el,i) => {
+    el.style.borderColor = i===idx ? 'var(--green)' : 'var(--border)';
+    el.style.background  = i===idx ? 'rgba(46,204,113,.1)' : 'var(--card)';
+  });
+}
+
+function buildIRRChart() {
+  const chart = document.getElementById('irrChart');
+  if (!chart || chart.dataset.built) return;
+  chart.dataset.built = '1';
+  // Show top 6 sites by IRR
+  const top = [...sites].sort((a,b)=>b.irr-a.irr).slice(0,6);
+  top.forEach(s => {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:8px;font-size:10px';
+    row.innerHTML = `
+      <span style="min-width:90px;color:var(--grey);font-family:'DM Mono',monospace;font-size:9px">${s.loc.split(',')[0]}</span>
+      <div class="irr-bar" style="flex:1"><div class="irr-fill" data-w="${(s.irr/40*100).toFixed(1)}"></div></div>
+      <span style="color:var(--green);font-family:'DM Mono',monospace;min-width:36px;text-align:right">${s.irr}%</span>`;
+    chart.appendChild(row);
+    setTimeout(() => {
+      row.querySelectorAll('.irr-fill').forEach(f => f.style.width = f.dataset.w + '%');
+    }, 100);
+  });
+}
+
+/* ─── LEAF CONFETTI ─── */
+(function() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, leaves = [];
+  const LEAF_IMG = new Image();
+  LEAF_IMG.crossOrigin = 'anonymous';
+  LEAF_IMG.src = 'https://raw.githubusercontent.com/Shuaibsayed/Cyclum_Investor/main/Leaf.png';
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function rand(min, max) { return min + Math.random() * (max - min); }
+
+  function spawnLeaf() {
+    return {
+      x: rand(0, W),
+      y: rand(-60, -10),
+      size: rand(10, 22),
+      speedX: rand(-0.6, 0.6),
+      speedY: rand(0.5, 1.4),
+      rot: rand(0, Math.PI * 2),
+      rotSpeed: rand(-0.02, 0.02),
+      alpha: rand(0.25, 0.55),
+      sway: rand(0.003, 0.009),
+      swayOffset: rand(0, Math.PI * 2),
+      swayAmp: rand(0.4, 1.2),
+      t: 0
+    };
+  }
+
+  // Start with 28 leaves scattered across screen
+  for (let i = 0; i < 28; i++) {
+    const l = spawnLeaf();
+    l.y = rand(0, H); // already on screen
+    leaves.push(l);
+  }
+
+  function drawLeaf(l) {
+    ctx.save();
+    ctx.globalAlpha = l.alpha;
+    ctx.translate(l.x, l.y);
+    ctx.rotate(l.rot);
+    if (LEAF_IMG.complete && LEAF_IMG.naturalWidth > 0) {
+      ctx.drawImage(LEAF_IMG, -l.size/2, -l.size/2, l.size, l.size);
+    } else {
+      // fallback: simple leaf shape
+      ctx.fillStyle = '#2ECC71';
+      ctx.beginPath();
+      ctx.ellipse(0, 0, l.size*0.4, l.size*0.25, 0, 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    leaves.forEach((l, i) => {
+      l.t += 1;
+      l.x += l.speedX + Math.sin(l.t * l.sway + l.swayOffset) * l.swayAmp;
+      l.y += l.speedY;
+      l.rot += l.rotSpeed;
+      drawLeaf(l);
+      // recycle
+      if (l.y > H + 30 || l.x < -40 || l.x > W + 40) {
+        leaves[i] = spawnLeaf();
+      }
+    });
+    // gently add new leaves occasionally
+    if (Math.random() < 0.015 && leaves.length < 40) leaves.push(spawnLeaf());
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* ─── INIT ─── */
+buildSitesList();
+animateCounters(document.getElementById('page1'));
+initPieChart();
+</script>
+</body>
+</html>
